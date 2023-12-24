@@ -6,7 +6,6 @@ public class PizzaService
 {
     public PizzaService()
     {
-        
     }
 
     public IEnumerable<Pizza> GetAll()
