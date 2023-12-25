@@ -1,40 +1,63 @@
+using ContosoPizza.Data;
 using ContosoPizza.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ContosoPizza.Services;
 
-public class PizzaService
+public class PizzaService(PizzaContext ctx)
 {
-    public PizzaService()
-    {
-    }
-
     public IEnumerable<Pizza> GetAll()
     {
-        throw new NotImplementedException();
+        return ctx.Pizzas.AsNoTracking().ToList();
     }
 
     public Pizza? GetById(int id)
     {
-        throw new NotImplementedException();
+        return ctx.Pizzas.Include(x => x.Toppings).Include(x => x.Sauce).AsNoTracking().SingleOrDefault(x => x.Id == id);
     }
 
     public Pizza? Create(Pizza newPizza)
     {
-        throw new NotImplementedException();
+        ctx.Pizzas.Add(newPizza);
+        ctx.SaveChanges();
+        return newPizza;
     }
 
-    public void AddTopping(int PizzaId, int ToppingId)
+    public void UpdateSauce(int pizzaId, int sauceId)
     {
-        throw new NotImplementedException();
+        var pizzaToUpdate = ctx.Pizzas.Find(pizzaId);
+        var sauceToUpdate = ctx.Sauces.Find(sauceId);
+        if (pizzaToUpdate is not null && sauceToUpdate is not null)
+        {
+            pizzaToUpdate.Sauce = sauceToUpdate;
+            ctx.SaveChanges();
+        }
+        else
+        {
+            throw new InvalidOperationException();
+        }
     }
 
-    public void UpdateSauce(int PizzaId, int SauceId)
+    public void AddTopping(int pizzaId, int toppingId)
     {
-        throw new NotImplementedException();
+        var pizzaToUpdate = ctx.Pizzas.Find(pizzaId);
+        var toppingToAdd = ctx.Toppings.Find(toppingId);
+        if (pizzaToUpdate is null || toppingToAdd is null)
+        {
+            throw new InvalidOperationException();
+        }
+        pizzaToUpdate.Toppings ??= new List<Topping>();
+        ctx.Toppings.Add(toppingToAdd);
+        ctx.SaveChanges();
     }
 
     public void DeleteById(int id)
     {
-        throw new NotImplementedException();
+        var pizzaToDelete = ctx.Pizzas.Find(id);
+        if (pizzaToDelete is not null)
+        {
+            ctx.Pizzas.Remove(pizzaToDelete);
+            ctx.SaveChanges();
+        }
     }
 }
