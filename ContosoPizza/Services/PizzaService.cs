@@ -47,7 +47,8 @@ public class PizzaService(PizzaContext ctx)
             throw new InvalidOperationException();
         }
         pizzaToUpdate.Toppings ??= new List<Topping>();
-        ctx.Toppings.Add(toppingToAdd);
+        pizzaToUpdate.Toppings.Add(toppingToAdd);
+
         ctx.SaveChanges();
     }
 
