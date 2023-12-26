@@ -24,34 +24,37 @@ public class DbInitializer
 
         var pizzas = new Pizza[]
         {
-                new() {
-                        Name = "Meat Lovers",
-                        Sauce = tomatoSauce,
-                        Toppings = new List<Topping>
-                            {
-                                pepperoniTopping,
-                                sausageTopping,
-                                hamTopping,
-                                chickenTopping
-                            }
-                    },
-                new() {
-                        Name = "Hawaiian",
-                        Sauce = tomatoSauce,
-                        Toppings = new List<Topping>
-                            {
-                                pineappleTopping,
-                                hamTopping
-                            }
-                    },
-                new() {
-                        Name="Alfredo Chicken",
-                        Sauce = alfredoSauce,
-                        Toppings = new List<Topping>
-                            {
-                                chickenTopping
-                            }
-                        }
+            new() 
+            {
+                Name = "Meat Lovers",
+                Sauce = tomatoSauce,
+                Toppings = new List<Topping>
+                {
+                    pepperoniTopping,
+                    sausageTopping,
+                    hamTopping,
+                    chickenTopping
+                }
+            },
+            new() 
+            {
+                Name = "Hawaiian",
+                Sauce = tomatoSauce,
+                Toppings = new List<Topping>
+                {
+                    pineappleTopping,
+                    hamTopping
+                }
+            },
+            new() 
+            {
+                Name="Alfredo Chicken",
+                Sauce = alfredoSauce,
+                Toppings = new List<Topping>
+                {
+                    chickenTopping
+                }
+            }
         };
 
         context.Pizzas.AddRange(pizzas);
