@@ -8,7 +8,7 @@ public class PizzaService(PizzaContext ctx)
 {
     public IEnumerable<Pizza> GetAll()
     {
-        return ctx.Pizzas.AsNoTracking().ToList();
+        return ctx.Pizzas.Include(x => x.Toppings).Include(x => x.Sauce).AsNoTracking().ToList();
     }
 
     public Pizza? GetById(int id)
